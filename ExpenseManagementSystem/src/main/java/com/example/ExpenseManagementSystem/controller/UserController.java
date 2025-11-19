@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.ExpenseManagementSystem.dto.UserDto;
 
 @RestController // Bu sınıfın bir API noktası olduğunu belirtir.
 @RequestMapping("/api/users") // Adresimiz: localhost:8080/api/users
@@ -15,8 +16,18 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody User user) {
+
         User savedUser = userService.saveUser(user);
-        return ResponseEntity.ok(savedUser);
+
+        UserDto userDto = UserDto.mapToDto(savedUser);
+
+        return ResponseEntity.ok(userDto);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+        User user = userService.getUserById(id);
+        UserDto userDto = UserDto.mapToDto(user);
+        return ResponseEntity.ok(userDto);
     }
 }
