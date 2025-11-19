@@ -3,9 +3,12 @@ package com.example.ExpenseManagementSystem.dto;
 import com.example.ExpenseManagementSystem.entity.User;
 import com.example.ExpenseManagementSystem.enums.Role;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.springframework.hateoas.RepresentationModel;
 
 @Data
-public class UserDto {
+@EqualsAndHashCode(callSuper = false)
+public class UserDto extends RepresentationModel<UserDto> {
 
     private Long id;
     private String firstName;

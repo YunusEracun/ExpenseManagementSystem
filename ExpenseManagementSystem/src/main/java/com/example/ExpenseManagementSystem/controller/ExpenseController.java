@@ -22,11 +22,6 @@ public class ExpenseController {
         return ResponseEntity.ok(savedExpense);
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Expense>> getExpensesByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(expenseService.getExpensesByUserId(userId));
-    }
-
     @GetMapping("/pending")
     public ResponseEntity<List<Expense>> getPendingExpenses() {
         return ResponseEntity.ok(expenseService.getPendingExpenses());
