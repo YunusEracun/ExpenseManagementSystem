@@ -1,6 +1,7 @@
 package com.example.ExpenseManagementSystem.entity;
 
 import com.example.ExpenseManagementSystem.enums.ExpenseStatus;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Expense {
 
     @Id

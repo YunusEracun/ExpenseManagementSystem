@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,5 +24,13 @@ public class ExpenseService {
         expense.setDate(LocalDateTime.now());
         expense.setStatus(ExpenseStatus.PENDING);
         return expenseRepository.save(expense);
+    }
+    public List<Expense> getExpensesByUserId(Long userId) {
+        userService.getUserById(userId);
+        return expenseRepository.findByUserId(userId);
+    }
+
+    public List<Expense> getPendingExpenses() {
+        return expenseRepository.findByStatus(ExpenseStatus.PENDING);
     }
 }

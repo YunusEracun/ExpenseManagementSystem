@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/expenses")
 @RequiredArgsConstructor
@@ -17,5 +19,15 @@ public class ExpenseController {
     public ResponseEntity<Expense> createExpense(@PathVariable Long userId, @RequestBody Expense expense) {
         Expense savedExpense = expenseService.createExpense(userId, expense);
         return ResponseEntity.ok(savedExpense);
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Expense>> getExpensesByUser(@PathVariable Long userId) {
+        return ResponseEntity.ok(expenseService.getExpensesByUserId(userId));
+    }
+
+    @GetMapping("/pending")
+    public ResponseEntity<List<Expense>> getPendingExpenses() {
+        return ResponseEntity.ok(expenseService.getPendingExpenses());
     }
 }

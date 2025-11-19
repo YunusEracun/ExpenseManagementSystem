@@ -2,6 +2,7 @@ package com.example.ExpenseManagementSystem.entity;
 
 
 import com.example.ExpenseManagementSystem.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -12,6 +13,7 @@ import jakarta.validation.constraints.Pattern;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
 public class User {
     @Id
