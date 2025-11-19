@@ -33,4 +33,16 @@ public class ExpenseService {
     public List<Expense> getPendingExpenses() {
         return expenseRepository.findByStatus(ExpenseStatus.PENDING);
     }
+
+    public Expense processExpense(Long id, ExpenseStatus newStatus) {
+        Expense expense = expenseRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Harcama bulunamadı! ID: " + id));
+
+        if (expense.getStatus() != ExpenseStatus.PENDING) {
+            throw new RuntimeException("Bu harcama zaten işlenmiş! (Durumu: " + expense.getStatus() + ")");
+        }
+
+        expense.setStatus(newStatus);
+        return expenseRepository.save(expense);
+    }
 }

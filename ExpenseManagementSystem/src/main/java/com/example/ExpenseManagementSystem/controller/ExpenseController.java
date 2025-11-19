@@ -1,6 +1,7 @@
 package com.example.ExpenseManagementSystem.controller;
 
 import com.example.ExpenseManagementSystem.entity.Expense;
+import com.example.ExpenseManagementSystem.enums.ExpenseStatus;
 import com.example.ExpenseManagementSystem.service.ExpenseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,5 +30,10 @@ public class ExpenseController {
     @GetMapping("/pending")
     public ResponseEntity<List<Expense>> getPendingExpenses() {
         return ResponseEntity.ok(expenseService.getPendingExpenses());
+    }
+
+    @PatchMapping("/{id}/{status}")
+    public ResponseEntity<Expense> updateExpenseStatus(@PathVariable Long id, @PathVariable ExpenseStatus status) {
+        return ResponseEntity.ok(expenseService.processExpense(id, status));
     }
 }
