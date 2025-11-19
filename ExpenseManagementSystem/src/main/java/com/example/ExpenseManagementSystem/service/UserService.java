@@ -1,6 +1,7 @@
 package com.example.ExpenseManagementSystem.service;
 
 import com.example.ExpenseManagementSystem.entity.User;
+import com.example.ExpenseManagementSystem.exception.ResourceNotFoundException;
 import com.example.ExpenseManagementSystem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,6 @@ public class UserService {
     public User getUserById(Long id) {
         // Veritabanına bak, varsa getir, yoksa hata fırlat.
         return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı! ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Kullanıcı bulunamadı! ID: " + id));
     }
 }

@@ -3,6 +3,7 @@ package com.example.ExpenseManagementSystem.service;
 import com.example.ExpenseManagementSystem.entity.Expense;
 import com.example.ExpenseManagementSystem.entity.User;
 import com.example.ExpenseManagementSystem.enums.ExpenseStatus;
+import com.example.ExpenseManagementSystem.exception.ResourceNotFoundException;
 import com.example.ExpenseManagementSystem.repository.ExpenseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class ExpenseService {
 
     public Expense processExpense(Long id, ExpenseStatus newStatus) {
         Expense expense = expenseRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Harcama bulunamadı! ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Harcama bulunamadı! ID: " + id));
 
         if (expense.getStatus() != ExpenseStatus.PENDING) {
             throw new RuntimeException("Bu harcama zaten işlenmiş! (Durumu: " + expense.getStatus() + ")");
