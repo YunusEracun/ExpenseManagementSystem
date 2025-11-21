@@ -1,10 +1,12 @@
 package com.example.ExpenseManagementSystem.controller;
 
+import com.example.ExpenseManagementSystem.dto.ExpenseRequest;
 import com.example.ExpenseManagementSystem.entity.Expense;
 import com.example.ExpenseManagementSystem.enums.ExpenseStatus;
 import com.example.ExpenseManagementSystem.service.ExpenseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,11 +22,20 @@ public class ExpenseController {
     private final ExpenseService expenseService;
 
     @PostMapping("/{userId}")
-    public ResponseEntity<Expense> createExpense(@PathVariable Long userId, @RequestBody Expense expense) {
+    @Operation(summary = "Yeni Harcama Ekle", description = "Kullanıcı adına yeni bir harcama fişi oluşturur.")
+    public ResponseEntity<Expense> createExpense(
+            @PathVariable Long userId,
+            @Valid @RequestBody ExpenseRequest request // ARTIK ENTITY DEĞİL DTO BEKLİYORUZ
+    ) {
+
+        Expense expense = new Expense();
+        expense.setAmount(request.getAmount());
+        expense.setDescription(request.getDescription());
+
         Expense savedExpense = expenseService.createExpense(userId, expense);
+
         return ResponseEntity.ok(savedExpense);
     }
-
     @GetMapping("/pending")
     public ResponseEntity<List<Expense>> getPendingExpenses() {
         return ResponseEntity.ok(expenseService.getPendingExpenses());
@@ -38,7 +49,7 @@ public class ExpenseController {
     public ResponseEntity<Expense> updateExpenseStatus(
             @PathVariable Long id,
             @PathVariable ExpenseStatus status,
-            @RequestParam Long memberId // URL'den ?memberId=1 diye gelecek
+            @RequestParam Long memberId
     ) {
         return ResponseEntity.ok(expenseService.processExpense(id, status, memberId));
     }
