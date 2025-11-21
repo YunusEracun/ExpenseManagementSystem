@@ -61,7 +61,7 @@ Bu projede API uçlarını (endpoints) test etmek ve backend sözleşmesini ince
 1. Canlı Test Arayüzü (Swagger UI)
 Proje çalışır durumdayken, aşağıdaki adrese giderek tüm istekleri tarayıcı üzerinden test edebilirsiniz:
 
-👉 Canlı Swagger Arayüzüne Git
+👉 [Canlı Swagger Arayüzüne Git](http://localhost:8080/swagger-ui/index.html)
 
 🔒 Swagger'da Nasıl Yetki Alınır?
 /api/auth/authenticate adresinden giriş yapıp token değerini kopyalayın.
@@ -73,6 +73,6 @@ Kutucuğa Bearer SİZİN_TOKENINIZ formatında yapıştırın ve Authorize deyin
 2. API Sözleşmesi (OpenAPI JSON)
 Eğer projeyi çalıştırmadan API yapısını incelemek veya bu sözleşmeyi Postman gibi araçlara import etmek isterseniz:
 
-📄 ExpenseManagementContract.json Dosyasını Görüntüle
+📄 [ExpenseManagementContract.json Dosyasını Görüntüle](./docs/ExpenseManagementContract.json)
 
 (Not: Bu dosyayı GitHub üzerinden direkt görüntüleyebilir veya Raw modunda indirip kullanabilirsiniz.)
