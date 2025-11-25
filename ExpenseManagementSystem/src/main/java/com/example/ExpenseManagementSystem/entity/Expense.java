@@ -23,6 +23,11 @@ public class Expense {
 
     private BigDecimal amount;
 
+    private String receiptUrl; // Fişin dosya yolu veya S3 linki buraya gelecek
+    @ManyToOne
+    @JoinColumn(name ="category_id")
+    private Category category;
+
     private String description;
 
     private LocalDateTime date;

@@ -8,34 +8,41 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/expenses")
 @RequiredArgsConstructor
-@Tag(name = "Harcama İşlemleri", description = "Harcama ekleme, listeleme ve onaylama yönetimi") // BAŞLIK
+@Tag(name = "Harcama İşlemleri", description = "Harcama ekleme, listeleme ve onaylama yönetimi")
 public class ExpenseController {
 
     private final ExpenseService expenseService;
 
-    @PostMapping("/{userId}")
-    @Operation(summary = "Yeni Harcama Ekle", description = "Kullanıcı adına yeni bir harcama fişi oluşturur.")
-    public ResponseEntity<Expense> createExpense(
+    // --- DEĞİŞEN KISIM BURASI ---
+    @PostMapping(value = "/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE) // Kargo Tipini Belirttik
+    @Operation(summary = "Yeni Harcama Ekle", description = "Kullanıcı adına resimli harcama fişi oluşturur.")
+    public ResponseEntity<Void> createExpense(
             @PathVariable Long userId,
-            @Valid @RequestBody ExpenseRequest request // ARTIK ENTITY DEĞİL DTO BEKLİYORUZ
+
+            // JSON Kısmı:
+            @Valid @RequestPart("request") ExpenseRequest request,
+
+            // Dosya Kısmı (Zorunlu değilse false diyebilirsin):
+            @RequestPart(value = "file", required = false) MultipartFile file
     ) {
+        // Artık entity oluşturma işini Service yapıyor. Biz sadece iletiyoruz.
+        expenseService.createExpense(userId, request, file);
 
-        Expense expense = new Expense();
-        expense.setAmount(request.getAmount());
-        expense.setDescription(request.getDescription());
-
-        Expense savedExpense = expenseService.createExpense(userId, expense);
-
-        return ResponseEntity.ok(savedExpense);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+    // ----------------------------
+
     @GetMapping("/pending")
     public ResponseEntity<List<Expense>> getPendingExpenses() {
         return ResponseEntity.ok(expenseService.getPendingExpenses());
