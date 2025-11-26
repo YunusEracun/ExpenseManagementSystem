@@ -30,6 +30,16 @@ public class Expense {
     @Enumerated(EnumType.STRING)
     private ExpenseStatus status;
 
+    // --- EKLENEN KISIM 1: Kategori İlişkisi ---
+    // Projende Category diye bir Entity olduğu için ilişki kuruyoruz.
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    // --- EKLENEN KISIM 2: Dosya Yolu ---
+    // MinIO'dan dönen dosya ismini burada saklayacağız.
+    @Column(name = "receipt_url")
+    private String receiptUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

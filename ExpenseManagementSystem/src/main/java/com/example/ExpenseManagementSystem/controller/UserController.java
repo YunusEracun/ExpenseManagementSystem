@@ -33,7 +33,7 @@ public class UserController {
                 .map(user -> {
                     UserDto dto = UserDto.mapToDto(user);
                     dto.add(linkTo(methodOn(UserController.class).getUserById(user.getId())).withSelfRel());
-                    dto.add(linkTo(methodOn(ExpenseController.class).createExpense(user.getId(), null)).withRel("create-expense"));
+                    dto.add(linkTo(methodOn(ExpenseController.class).createExpense(user.getId(), null,null)).withRel("create-expense"));
                     return dto;
                 })
                 .toList();
@@ -46,7 +46,7 @@ public class UserController {
         UserDto userDto = UserDto.mapToDto(user);
         userDto.add(linkTo(methodOn(UserController.class).getUserById(id)).withSelfRel());
         userDto.add(linkTo(methodOn(UserController.class).getAllUsers()).withRel("all-users"));
-        userDto.add(linkTo(methodOn(ExpenseController.class).createExpense(id, null)).withRel("create-expense"));
+        userDto.add(linkTo(methodOn(ExpenseController.class).createExpense(id, null,null)).withRel("create-expense"));
 
         return ResponseEntity.ok(userDto);
     }

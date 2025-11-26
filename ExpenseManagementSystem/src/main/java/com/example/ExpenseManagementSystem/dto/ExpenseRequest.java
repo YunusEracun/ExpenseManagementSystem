@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Data
 public class ExpenseRequest {
@@ -16,4 +17,9 @@ public class ExpenseRequest {
 
     @NotBlank(message = "Açıklama boş olamaz")
     private String description;
+
+    @NotBlank(message = "Kategori id boş olamaz")
+    private Long categoryId;
+
+    private LocalDateTime date;
 }
